@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\oandr\AppData\Local\Python\pythoncore-3.14-64\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\oandr\Documentos computador\t_final_segurança
+collecting ... collected 23 items
+
+tests/test_controles.py::TestIA5_HashArgon2::test_hash_usa_argon2id PASSED [  4%]
+tests/test_controles.py::TestIA5_HashArgon2::test_salt_unico_por_hash PASSED [  8%]
+tests/test_controles.py::TestIA5_HashArgon2::test_verificacao_correta_e_incorreta PASSED [ 13%]
+tests/test_controles.py::TestIA5_HashArgon2::test_senha_nunca_em_texto_plano_no_banco PASSED [ 17%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_curta PASSED [ 21%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_senha_vazada PASSED [ 26%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_aceita_passphrase_sem_complexidade PASSED [ 30%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_registro_pela_web_rejeita_senha_vazada PASSED [ 34%]
+tests/test_controles.py::TestIA2_1_MFA::test_totp_valido_e_invalido PASSED [ 39%]
+tests/test_controles.py::TestIA2_1_MFA::test_qr_code_gerado PASSED       [ 43%]
+tests/test_controles.py::TestIA2_1_MFA::test_login_com_senha_mas_sem_mfa_nao_autentica PASSED [ 47%]
+tests/test_controles.py::TestIA2_1_MFA::test_login_completo_com_mfa PASSED [ 52%]
+tests/test_controles.py::TestAC7_Lockout::test_bloqueia_na_enesima_tentativa PASSED [ 56%]
+tests/test_controles.py::TestAC7_Lockout::test_backoff_exponencial PASSED [ 60%]
+tests/test_controles.py::TestAC7_Lockout::test_reset_apos_sucesso PASSED [ 65%]
+tests/test_controles.py::TestAC7_Lockout::test_sexta_tentativa_bloqueada_pela_web PASSED [ 69%]
+tests/test_controles.py::TestAU2_AU6_Logging::test_evento_tem_campos_estruturados PASSED [ 73%]
+tests/test_controles.py::TestAU2_AU6_Logging::test_login_falha_e_registrado PASSED [ 78%]
+tests/test_controles.py::TestAU2_AU6_Logging::test_revisao_filtra_por_tipo PASSED [ 82%]
+tests/test_controles.py::TestAU2_AU6_Logging::test_resumo_conta_por_tipo PASSED [ 86%]
+tests/test_controles.py::TestSC23_Sessao::test_cookie_tem_flags_de_seguranca PASSED [ 91%]
+tests/test_controles.py::TestSC23_Sessao::test_regeneracao_de_sid_no_login PASSED [ 95%]
+tests/test_controles.py::TestSC23_Sessao::test_timeout_de_inatividade PASSED [100%]
+
+============================= 23 passed in 1.26s ==============================

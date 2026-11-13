@@ -1,0 +1,7 @@
+{"timestamp": "2026-11-13T19:59:58.692680+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=1"}
+{"timestamp": "2026-11-13T19:59:58.751263+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=2"}
+{"timestamp": "2026-11-13T19:59:58.815019+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=3"}
+{"timestamp": "2026-11-13T19:59:58.869762+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=4"}
+{"timestamp": "2026-11-13T19:59:58.945109+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=5"}
+{"timestamp": "2026-11-13T19:59:58.945544+00:00", "tipo": "LOCKOUT_ACIONADO", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "bloqueio=30s"}
+{"timestamp": "2026-11-13T20:00:16.276700+00:00", "tipo": "LOGIN_FALHA", "usuario": "alvo", "ip": "127.0.0.1", "detalhe": "falhas=1"}

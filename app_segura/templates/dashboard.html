@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>Painel (segura)</title></head>
+<body>
+  <h1>Bem-vindo, {{ usuario }}</h1>
+  <p>Area autenticada da versao SEGURA (sessao endurecida, MFA ativo).</p>
+  <p><a href="{{ url_for('logout') }}">Sair</a></p>
+</body>
+</html>

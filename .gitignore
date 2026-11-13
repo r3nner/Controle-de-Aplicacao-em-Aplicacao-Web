@@ -1,0 +1,10 @@
+# Artefatos de runtime
+__pycache__/
+*.pyc
+.pytest_cache/
+*/data/
+*.db
+app_segura/seguranca.log
+
+# As evidencias coletadas SÃO versionadas (ficam em evidencias/).
+!evidencias/

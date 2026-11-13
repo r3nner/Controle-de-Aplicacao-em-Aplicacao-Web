@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>Verificar MFA (segura)</title></head>
+<body>
+  <h1>Verificacao em duas etapas</h1>
+  <p>Digite o codigo de 6 digitos do seu aplicativo autenticador.</p>
+  {% if erro %}<p style="color:red">{{ erro }}</p>{% endif %}
+  <form method="post">
+    <label>Codigo: <input name="codigo" inputmode="numeric" autofocus></label><br>
+    <button type="submit">Verificar</button>
+  </form>
+</body>
+</html>

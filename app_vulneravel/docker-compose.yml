@@ -1,0 +1,12 @@
+services:
+  app_vulneravel:
+    build: .
+    container_name: app_vulneravel
+    ports:
+      - "5000:5000"
+    volumes:
+      - vuln_data:/data
+    restart: unless-stopped
+
+volumes:
+  vuln_data:

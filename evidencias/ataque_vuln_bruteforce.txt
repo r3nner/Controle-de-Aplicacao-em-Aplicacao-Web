@@ -1,0 +1,21 @@
+================================================================
+ATAQUE DE FORCA BRUTA
+Alvo        : http://127.0.0.1:5000/login
+Usuario     : alvo
+Senhas testar: 12
+Inicio      : 2026-11-13 16:59:52
+================================================================
+[01] senha='123456' -> FALHA
+[02] senha='password' -> FALHA
+[03] senha='admin' -> FALHA
+[04] senha='qwerty' -> FALHA
+[05] senha='abc123' -> FALHA
+[06] senha='senha' -> FALHA
+[07] senha='letmein' -> FALHA
+[08] senha='123123' -> FALHA
+[09] senha='senha123' -> SUCESSO_TOTAL
+================================================================
+RESULTADO   : COMPROMETIDO com a senha 'senha123'
+Tentativas  : 9
+Duracao     : 0.15s
+================================================================

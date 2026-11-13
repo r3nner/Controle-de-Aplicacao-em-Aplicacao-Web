@@ -1,0 +1,18 @@
+services:
+  app_segura:
+    build: .
+    container_name: app_segura
+    ports:
+      - "5001:5000"
+    environment:
+      - DB_PATH=/data/segura.db
+      - SESSION_COOKIE_SECURE=false   # laboratorio HTTP; producao: true + HTTPS
+      - MAX_TENTATIVAS=5
+      - BLOQUEIO_BASE_SEG=30
+      - TIMEOUT_INATIVIDADE=900
+    volumes:
+      - segura_data:/data
+    restart: unless-stopped
+
+volumes:
+  segura_data:

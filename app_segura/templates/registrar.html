@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>Registrar (segura)</title></head>
+<body>
+  <h1>Registrar — versao SEGURA</h1>
+  {% if erro %}<p style="color:red">{{ erro }}</p>{% endif %}
+  <p><small>Politica (NIST 800-63B): minimo 8 caracteres, nao pode ser uma
+     senha vazada. Sem regras de complexidade obrigatorias.</small></p>
+  <form method="post">
+    <label>Usuario: <input name="usuario"></label><br>
+    <label>Senha: <input name="senha" type="password"></label><br>
+    <button type="submit">Criar conta</button>
+  </form>
+  <p><a href="{{ url_for('login') }}">Voltar ao login</a></p>
+</body>
+</html>

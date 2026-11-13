@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>Ativar MFA (segura)</title></head>
+<body>
+  <h1>Ativar MFA (TOTP)</h1>
+  <p>Escaneie o QR code com Google Authenticator, Authy ou similar:</p>
+  {% if erro %}<p style="color:red">{{ erro }}</p>{% endif %}
+  <img src="{{ qr }}" alt="QR code TOTP"><br>
+  <p><small>Ou cadastre manualmente o segredo: <code>{{ segredo }}</code></small></p>
+  <form method="post">
+    <label>Codigo de 6 digitos: <input name="codigo" inputmode="numeric"></label><br>
+    <button type="submit">Confirmar e ativar</button>
+  </form>
+</body>
+</html>
