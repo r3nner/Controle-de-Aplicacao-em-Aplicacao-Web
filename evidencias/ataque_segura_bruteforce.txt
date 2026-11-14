@@ -1,17 +1,20 @@
+PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5001 --usuario alvo --wordlist ataque/wordlist.txt
+
 ================================================================
 ATAQUE DE FORCA BRUTA
 Alvo        : http://127.0.0.1:5001/login
 Usuario     : alvo
 Senhas testar: 12
-Inicio      : 2026-11-13 16:59:58
+Inicio      : 2026-11-14 19:02:20
 ================================================================
-[01] senha='123456' -> FALHA
-[02] senha='password' -> FALHA
-[03] senha='admin' -> FALHA
-[04] senha='qwerty' -> FALHA
-[05] senha='abc123' -> BLOQUEADO
+[01] senha='123456' -> FALHA (HTTP 401)
+[02] senha='password' -> FALHA (HTTP 401)
+[03] senha='admin' -> FALHA (HTTP 401)
+[04] senha='qwerty' -> FALHA (HTTP 401)
+[05] senha='abc123' -> FALHA (HTTP 401)
+[06] senha='senha' -> BLOQUEADO (HTTP 429)
 ================================================================
-RESULTADO   : Conta BLOQUEADA apos 5 tentativas (AC-7). Ataque interrompido.
-Tentativas  : 5
-Duracao     : 0.33s
+RESULTADO   : Conta BLOQUEADA apos 6 tentativas (AC-7). Ataque interrompido.
+Tentativas  : 6
+Duracao     : 0.42s
 ================================================================

@@ -15,7 +15,7 @@ import time
 
 import requests
 
-from brute_force import classificar
+from brute_force import classificar, validar_alvo
 
 
 def main():
@@ -24,6 +24,8 @@ def main():
     p.add_argument("--creds", required=True)
     p.add_argument("--saida", default=None)
     args = p.parse_args()
+
+    validar_alvo(args.url)   # REQ-ATQ-06
 
     pares = []
     with open(args.creds, encoding="utf-8") as f:
@@ -58,8 +60,8 @@ def main():
             log(f"[{i:02d}] ERRO de conexao: {e}")
             continue
 
-        estado = classificar(r.text)
-        log(f"[{i:02d}] {usuario}:{senha} -> {estado}")
+        estado = classificar(r.status_code, r.text)
+        log(f"[{i:02d}] {usuario}:{senha} -> {estado} (HTTP {r.status_code})")
         if estado == "SUCESSO_TOTAL":
             comprometidos += 1
 

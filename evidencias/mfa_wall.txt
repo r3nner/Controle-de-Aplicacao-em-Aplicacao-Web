@@ -1,4 +1,6 @@
+PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5001 --usuario alvo --wordlist senha_correta.txt   # senha correta -> para no MFA
+
 === Demonstracao da parede de MFA (senha CORRETA, sem 2o fator) ===
 Verificacao em duas etapas
 Digite o codigo
-(Senha correta NAO leva ao painel: para na verificacao em duas etapas = IA-2(1))
+(Senha correta NAO leva ao painel: para na verificacao em duas etapas = IA-2(1)/(2))

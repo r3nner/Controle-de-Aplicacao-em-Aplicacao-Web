@@ -11,7 +11,7 @@ import os
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.shared import Pt, RGBColor
+from docx.shared import Inches, Pt, RGBColor
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
@@ -34,11 +34,23 @@ def ler(nome, limite=None):
 # ---------------------------------------------------------------------------
 # Helpers de formatacao
 # ---------------------------------------------------------------------------
-def add_marcador_captura(doc, texto):
-    p = doc.add_paragraph()
-    run = p.add_run(f"📸 [INSERIR CAPTURA DE TELA: {texto}]")
-    run.bold = True
-    run.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
+def add_captura(doc, texto, imagem=None, largura=6.3):
+    """Insere a imagem da captura se existir; senao, deixa o marcador vermelho."""
+    caminho = os.path.join(EVID, imagem) if imagem else None
+    if caminho and os.path.exists(caminho):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run().add_picture(caminho, width=Inches(largura))
+        legenda = doc.add_paragraph()
+        legenda.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        r = legenda.add_run(texto)
+        r.italic = True
+        r.font.size = Pt(9)
+    else:
+        p = doc.add_paragraph()
+        run = p.add_run(f"📸 [INSERIR CAPTURA DE TELA: {texto}]")
+        run.bold = True
+        run.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
 
 
 def add_bloco_codigo(doc, texto):
@@ -174,30 +186,35 @@ def build():
     )
     doc.add_heading("3.1 Verificação automatizada (pytest)", level=2)
     doc.add_paragraph(
-        "A suíte cobre os seis controles com 23 casos de teste, agrupados por "
+        "A suíte cobre os seis controles com 48 casos de teste, agrupados por "
         "controle (classes TestIA5, TestIA5_1, TestIA2_1, TestAC7, TestAU2_AU6, "
         "TestSC23). Comando: python -m pytest -v tests/."
     )
-    add_marcador_captura(doc, "terminal com a saída verde do pytest (23 passed)")
+    add_captura(doc, "Figura 1 — Saída do pytest: 48 testes passam (um grupo por controle).",
+                "captura1_pytest.png")
 
     doc.add_heading("3.2 Ataque força bruta — app VULNERÁVEL", level=2)
     doc.add_paragraph("Comando:")
     add_bloco_codigo(doc, "python brute_force.py --url http://localhost:5000 "
                           "--usuario alvo --wordlist wordlist.txt")
-    add_marcador_captura(doc, "CAPTURA 1 — terminal mostrando SUCESSO_TOTAL na app vulnerável")
+    add_captura(doc, "Figura 2 — Força bruta na app vulnerável: senha descoberta (SUCESSO_TOTAL).",
+                "captura2_bruteforce_vuln.png")
 
     doc.add_heading("3.3 Ataque força bruta — app SEGURA", level=2)
     doc.add_paragraph("Comando:")
     add_bloco_codigo(doc, "python brute_force.py --url http://localhost:5001 "
                           "--usuario alvo --wordlist wordlist.txt")
-    add_marcador_captura(doc, "CAPTURA 2 — terminal mostrando BLOQUEADO após 5 tentativas (AC-7)")
+    add_captura(doc, "Figura 3 — Força bruta na app segura: conta BLOQUEADA (AC-7).",
+                "captura3_bruteforce_segura.png")
 
     doc.add_heading("3.4 Credential stuffing — app SEGURA", level=2)
     doc.add_paragraph("Comando:")
     add_bloco_codigo(doc, "python credential_stuffing.py --url http://localhost:5001 "
                           "--creds creds_vazadas.txt")
-    add_marcador_captura(doc, "CAPTURA 3 — terminal mostrando 0 contas comprometidas")
-    add_marcador_captura(doc, "CAPTURA 4 — log estruturado do servidor (LOGIN_FALHA / LOCKOUT_ACIONADO)")
+    add_captura(doc, "Figura 4 — Credential stuffing na app segura: 0 contas comprometidas.",
+                "captura4_stuffing_segura.png")
+    add_captura(doc, "Figura 5 — Log do servidor: LOGIN_FALHA em sequência e LOCKOUT_ACIONADO.",
+                "captura5_log_servidor.png")
 
     # ---- 4. Evidencias e resultados ----
     doc.add_heading("4. Evidências e resultados", level=1)
@@ -220,6 +237,8 @@ def build():
         "verificação em duas etapas — o painel só é liberado após o segundo fator:"
     )
     add_bloco_codigo(doc, ler("mfa_wall.txt"))
+    add_captura(doc, "Figura 6 — Com a senha correta, o acesso para na verificação em duas etapas (MFA).",
+                "captura6_mfa_wall.png")
 
     doc.add_heading("4.6 Log de autenticação do servidor (AU-2/AU-6)", level=2)
     doc.add_paragraph(
@@ -230,7 +249,7 @@ def build():
 
     doc.add_heading("4.7 Síntese comparativa antes/depois", level=2)
     add_tabela(doc, ["Ataque", "App vulnerável", "App segura"], [
-        ["Força bruta", "Senha descoberta (comprometida)", "Bloqueada após 5 tentativas (AC-7)"],
+        ["Força bruta", "Senha descoberta (comprometida)", "Bloqueada na 6a tentativa — 5 falhas + bloqueio (AC-7)"],
         ["Credential stuffing", "Credencial válida reutilizável", "Rejeitada (senha forte + MFA)"],
         ["Rastreabilidade", "Nenhum registro", "Eventos registrados e revisáveis"],
     ])

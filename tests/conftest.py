@@ -71,3 +71,15 @@ def criar_usuario(db_path, usuario, senha, mfa=False, segredo=None):
     )
     c.commit()
     c.close()
+
+
+def abrir(db_path):
+    """Conexao sqlite direta (Row) para inspecionar/ajustar o estado nos testes."""
+    c = sqlite3.connect(db_path)
+    c.row_factory = sqlite3.Row
+    return c
+
+
+def sid_atual(client):
+    with client.session_transaction() as s:
+        return s.get("sid")

@@ -1,3 +1,54 @@
-# Credenciais "vazadas" (coletadas da app vulneravel) usadas no credential
-# stuffing. Formato: usuario:senha
+# Credenciais sinteticas simulando um vazamento de outro servico (REQ-ATQ-05).
+# Formato usuario:senha. >= 50 pares, >= 20 contas. Uso apenas no laboratorio.
 alvo:senha123
+user01:flamengo
+user01:000000
+user02:brasil
+user02:102030
+user03:dragon
+user04:senha123
+user04:mudar123
+user04:dragon
+user05:000000
+user06:111111
+user06:qwerty
+user07:password
+user07:mudar123
+user07:master
+user08:mudar123
+user08:dragon
+user09:123456
+user09:brasil
+user09:qwerty
+user10:password
+user11:letmein
+user12:123456
+user12:000000
+user12:iloveyou
+user13:102030
+user13:monkey
+user14:letmein
+user14:futebol
+user14:senha123
+user15:qwerty
+user16:senha
+user16:sunshine
+user17:qwerty
+user17:senha
+user17:iloveyou
+user18:brasil
+user19:123456
+user19:qwerty
+user20:abc123
+user20:master
+user20:abc123
+user21:master
+user21:qwerty
+user22:123456
+user23:monkey
+user24:senha123
+user25:master
+user25:sunshine
+user23:password
+user24:qwerty
+user26:123456

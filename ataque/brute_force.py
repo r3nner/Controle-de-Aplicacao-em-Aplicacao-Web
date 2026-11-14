@@ -15,16 +15,33 @@ Classifica cada tentativa pelo corpo da resposta (sinais observaveis):
 import argparse
 import sys
 import time
+from urllib.parse import urlparse
 
 import requests
 
+# REQ-ATQ-06: apenas alvos locais do laboratorio sao permitidos.
+ALVOS_PERMITIDOS = {"localhost", "127.0.0.1", "::1", "host.docker.internal",
+                    "app_segura", "app_vulneravel"}
 
-def classificar(texto: str) -> str:
+
+def validar_alvo(url: str) -> None:
+    host = (urlparse(url).hostname or "").lower()
+    if host not in ALVOS_PERMITIDOS:
+        raise SystemExit(f"ALVO RECUSADO: '{host}' nao e um alvo local autorizado. "
+                         f"Permitidos: {sorted(ALVOS_PERMITIDOS)}")
+
+
+def classificar(status: int, texto: str) -> str:
+    """REQ-ATQ-01: classifica por codigo HTTP e, so entao, pelo conteudo."""
+    if status == 429:
+        return "BLOQUEADO"
+    if status == 401:
+        return "FALHA"
     t = texto.lower()
     if "bem-vindo" in t:
         return "SUCESSO_TOTAL"
     if "duas etapas" in t:
-        return "SENHA_OK_MFA_BARROU"
+        return "MFA_REQUERIDO"
     if "bloquead" in t:
         return "BLOQUEADO"
     return "FALHA"
@@ -35,11 +52,16 @@ def main():
     p.add_argument("--url", required=True, help="ex.: http://localhost:5000")
     p.add_argument("--usuario", required=True)
     p.add_argument("--wordlist", required=True)
-    p.add_argument("--saida", default=None, help="arquivo de evidencia")
+    p.add_argument("--saida", default=None, help="arquivo de evidencia (texto)")
+    p.add_argument("--csv", default=None,
+                   help="REQ-ATQ-03: grava uma linha por tentativa")
     args = p.parse_args()
+
+    validar_alvo(args.url)   # REQ-ATQ-06
 
     with open(args.wordlist, encoding="utf-8") as f:
         senhas = [l.strip() for l in f if l.strip()]
+    csv_linhas = ["n,senha_mascarada,classificacao,tempo_s"]
 
     linhas = []
 
@@ -61,6 +83,7 @@ def main():
 
     for i, senha in enumerate(senhas, 1):
         sessao = requests.Session()
+        t0 = time.time()
         try:
             r = sessao.post(f"{args.url}/login",
                             data={"usuario": args.usuario, "senha": senha},
@@ -70,15 +93,18 @@ def main():
             break
 
         tentativas += 1
-        estado = classificar(r.text)
-        log(f"[{i:02d}] senha='{senha}' -> {estado}")
+        estado = classificar(r.status_code, r.text)
+        dt = time.time() - t0
+        mascara = senha[0] + "*" * max(len(senha) - 1, 0)
+        csv_linhas.append(f"{i},{mascara},{estado},{dt:.3f}")
+        log(f"[{i:02d}] senha='{senha}' -> {estado} (HTTP {r.status_code})")
 
         if estado == "SUCESSO_TOTAL":
             resultado_final = f"COMPROMETIDO com a senha '{senha}'"
             break
-        if estado == "SENHA_OK_MFA_BARROU":
+        if estado == "MFA_REQUERIDO":
             resultado_final = (f"Senha '{senha}' estava correta, mas o MFA "
-                               f"impediu o acesso (IA-2(1)).")
+                               f"impediu o acesso (IA-2(1)/(2)).")
             break
         if estado == "BLOQUEADO":
             resultado_final = (f"Conta BLOQUEADA apos {tentativas} tentativas "
@@ -96,6 +122,10 @@ def main():
         with open(args.saida, "w", encoding="utf-8") as f:
             f.write("\n".join(linhas) + "\n")
         print(f"\n[evidencia salva em {args.saida}]")
+    if args.csv:
+        with open(args.csv, "w", encoding="utf-8") as f:
+            f.write("\n".join(csv_linhas) + "\n")
+        print(f"[csv por tentativa salvo em {args.csv}]")
 
     return 0
 

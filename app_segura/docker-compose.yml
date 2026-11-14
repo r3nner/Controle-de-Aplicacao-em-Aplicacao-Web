@@ -9,9 +9,19 @@ services:
       - SESSION_COOKIE_SECURE=false   # laboratorio HTTP; producao: true + HTTPS
       - MAX_TENTATIVAS=5
       - BLOQUEIO_BASE_SEG=30
+      - BLOQUEIO_MAX_SEG=900
       - TIMEOUT_INATIVIDADE=900
+      - TIMEOUT_ABSOLUTO=28800
+      - PRE_AUTH_SEG=300
+      # Segredos lidos do ambiente (REQ-GER-06) — valores APENAS de laboratorio.
+      - SECRET_KEY=646210582bfc2398593c84b0216d06d318f02edc57709ccf55d434b32a11810f
+      - CHAVE_SEGREDOS=IPIkbfspX2v-saP7FXfPfqD5ecjHA2eu5m8XaknjU64=
+      - PEPPER=d51da6e4ab19ec460b67863f88e80406
     volumes:
       - segura_data:/data
+      # Monta a raiz do projeto para rodar testes/ataque via docker exec e
+      # gravar as evidencias de volta no host.
+      - ..:/proj
     restart: unless-stopped
 
 volumes:

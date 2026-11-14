@@ -1,0 +1,7 @@
+n,senha_mascarada,classificacao,tempo_s
+1,1*****,FALHA,0.066
+2,p*******,FALHA,0.080
+3,a****,FALHA,0.089
+4,q*****,FALHA,0.081
+5,a*****,FALHA,0.089
+6,s****,BLOQUEADO,0.017
