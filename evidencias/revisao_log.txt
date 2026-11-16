@@ -1,15 +1,13 @@
-PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python app_segura/revisao.py evidencias/log_servidor.txt
+$ docker exec -w /proj app_segura python app_segura/revisao.py evidencias/log_servidor.jsonl
+# executado: 2026-11-16T11:04:20-03:00 | origem: docker (container app_segura) | Python 3.12.16 (linux)
 
 ========================================================
-REVISAO DO LOG DE AUTENTICACAO — ../evidencias/log_servidor.txt
+REVISAO DO LOG DE AUTENTICACAO — evidencias/log_servidor.jsonl
 ========================================================
 Contagem por tipo de evento:
-  LOGIN_FALHA                  57
-  LOCKOUT_ACIONADO             1
-  LOGIN_BLOQUEADO              1
+  LOGIN_FALHA                  52
   LOGIN_SENHA_OK               1
 --------------------------------------------------------
-ALERTAS DISPARADOS (2):
-  {"regra": "R1", "tipo": "FORCA_BRUTA", "usuario": "alvo", "ocorrencias": 6}
-  {"regra": "R2", "tipo": "STUFFING_SPRAYING", "ip": "127.0.0.1", "contas": 27}
+ALERTAS DISPARADOS (1):
+  {"regra": "R2", "tipo": "STUFFING_SPRAYING", "ip": "172.20.0.1", "contas": 27}
 ========================================================

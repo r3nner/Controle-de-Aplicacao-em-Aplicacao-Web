@@ -1,10 +1,11 @@
-PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python -m pytest -v tests/
+$ docker exec -w /proj app_segura python -m pytest -v tests/
+# executado: 2026-11-16T11:03:41-03:00 | origem: docker (container app_segura) | Python 3.12.16 (linux)
 
-============================= test session starts =============================
-platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\oandr\AppData\Local\Python\pythoncore-3.14-64\python.exe
+============================= test session starts ==============================
+platform linux -- Python 3.12.16, pytest-8.3.3, pluggy-1.7.0 -- /usr/local/bin/python
 cachedir: .pytest_cache
-rootdir: C:\Users\oandr\Documentos computador\t_final_seguran�a
-collecting ... collected 48 items
+rootdir: /proj
+collecting ... collected 49 items
 
 tests/test_controles.py::TestIA5_HashArgon2::test_hash_usa_argon2id PASSED [  2%]
 tests/test_controles.py::TestIA5_HashArgon2::test_salt_unico_por_hash PASSED [  4%]
@@ -17,31 +18,32 @@ tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_curta PASSED [ 16
 tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_senha_vazada PASSED [ 18%]
 tests/test_controles.py::TestIA5_1_PoliticaSenha::test_aceita_passphrase_sem_complexidade PASSED [ 20%]
 tests/test_controles.py::TestIA5_1_PoliticaSenha::test_aceita_unicode_e_espacos PASSED [ 22%]
-tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_longa_demais PASSED [ 25%]
-tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_contextual PASSED [ 27%]
-tests/test_controles.py::TestIA5_1_PoliticaSenha::test_registro_pela_web_rejeita_senha_vazada PASSED [ 29%]
-tests/test_controles.py::TestIA5_1_PoliticaSenha::test_evento_politica_registrado PASSED [ 31%]
-tests/test_controles.py::TestIA2_MFA::test_totp_valido_e_invalido PASSED [ 33%]
-tests/test_controles.py::TestIA2_MFA::test_qr_code_gerado PASSED         [ 35%]
-tests/test_controles.py::TestIA2_MFA::test_janela_totp PASSED            [ 37%]
-tests/test_controles.py::TestIA2_MFA::test_segredo_cifrado_em_repouso PASSED [ 39%]
-tests/test_controles.py::TestIA2_MFA::test_login_com_senha_mas_sem_mfa_nao_autentica PASSED [ 41%]
-tests/test_controles.py::TestIA2_MFA::test_login_completo_com_mfa PASSED [ 43%]
-tests/test_controles.py::TestIA2_MFA::test_anti_replay_totp PASSED       [ 45%]
-tests/test_controles.py::TestIA2_MFA::test_pre_auth_expira PASSED        [ 47%]
-tests/test_controles.py::TestIA2_MFA::test_falha_mfa_conta_para_bloqueio PASSED [ 50%]
-tests/test_controles.py::TestAC7_Lockout::test_bloqueia_na_enesima_tentativa PASSED [ 52%]
-tests/test_controles.py::TestAC7_Lockout::test_backoff_exponencial PASSED [ 54%]
-tests/test_controles.py::TestAC7_Lockout::test_teto_do_backoff PASSED    [ 56%]
-tests/test_controles.py::TestAC7_Lockout::test_reset_apos_sucesso PASSED [ 58%]
-tests/test_controles.py::TestAC7_Lockout::test_sexta_tentativa_bloqueada_pela_web PASSED [ 60%]
-tests/test_controles.py::TestAC7_Lockout::test_senha_correta_durante_bloqueio PASSED [ 62%]
-tests/test_controles.py::TestAC7_Lockout::test_evento_login_bloqueado_sem_mexer_contador PASSED [ 64%]
-tests/test_controles.py::TestAC7_Lockout::test_bloqueio_usuario_inexistente PASSED [ 66%]
-tests/test_controles.py::TestAU_Logging::test_evento_tem_campos_estruturados PASSED [ 68%]
-tests/test_controles.py::TestAU_Logging::test_catalogo_de_eventos PASSED [ 70%]
-tests/test_controles.py::TestAU_Logging::test_login_falha_e_registrado PASSED [ 72%]
-tests/test_controles.py::TestAU_Logging::test_log_sem_senha PASSED       [ 75%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_longa_demais PASSED [ 24%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_rejeita_contextual PASSED [ 26%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_registro_pela_web_rejeita_senha_vazada PASSED [ 28%]
+tests/test_controles.py::TestIA5_1_PoliticaSenha::test_evento_politica_registrado PASSED [ 30%]
+tests/test_controles.py::TestIA2_MFA::test_totp_valido_e_invalido PASSED [ 32%]
+tests/test_controles.py::TestIA2_MFA::test_qr_code_gerado PASSED         [ 34%]
+tests/test_controles.py::TestIA2_MFA::test_janela_totp PASSED            [ 36%]
+tests/test_controles.py::TestIA2_MFA::test_segredo_cifrado_em_repouso PASSED [ 38%]
+tests/test_controles.py::TestIA2_MFA::test_login_com_senha_mas_sem_mfa_nao_autentica PASSED [ 40%]
+tests/test_controles.py::TestIA2_MFA::test_login_completo_com_mfa PASSED [ 42%]
+tests/test_controles.py::TestIA2_MFA::test_anti_replay_totp PASSED       [ 44%]
+tests/test_controles.py::TestIA2_MFA::test_pre_auth_expira PASSED        [ 46%]
+tests/test_controles.py::TestIA2_MFA::test_falha_mfa_conta_para_bloqueio PASSED [ 48%]
+tests/test_controles.py::TestAC7_Lockout::test_bloqueia_na_enesima_tentativa PASSED [ 51%]
+tests/test_controles.py::TestAC7_Lockout::test_backoff_exponencial PASSED [ 53%]
+tests/test_controles.py::TestAC7_Lockout::test_teto_do_backoff PASSED    [ 55%]
+tests/test_controles.py::TestAC7_Lockout::test_reset_apos_sucesso PASSED [ 57%]
+tests/test_controles.py::TestAC7_Lockout::test_sexta_tentativa_bloqueada_pela_web PASSED [ 59%]
+tests/test_controles.py::TestAC7_Lockout::test_senha_correta_durante_bloqueio PASSED [ 61%]
+tests/test_controles.py::TestAC7_Lockout::test_evento_login_bloqueado_sem_mexer_contador PASSED [ 63%]
+tests/test_controles.py::TestAC7_Lockout::test_bloqueio_usuario_inexistente PASSED [ 65%]
+tests/test_controles.py::TestAU_Logging::test_evento_tem_campos_estruturados PASSED [ 67%]
+tests/test_controles.py::TestAU_Logging::test_catalogo_de_eventos PASSED [ 69%]
+tests/test_controles.py::TestAU_Logging::test_login_falha_e_registrado PASSED [ 71%]
+tests/test_controles.py::TestAU_Logging::test_log_sem_senha PASSED       [ 73%]
+tests/test_controles.py::TestAU_Logging::test_xff_forjado_nao_aparece_no_log_por_padrao PASSED [ 75%]
 tests/test_controles.py::TestAU_Logging::test_revisao_filtra_por_tipo PASSED [ 77%]
 tests/test_controles.py::TestAU_Logging::test_resumo_conta_por_tipo PASSED [ 79%]
 tests/test_controles.py::TestAU_Logging::test_alerta_r1_forca_bruta PASSED [ 81%]
@@ -55,4 +57,4 @@ tests/test_controles.py::TestSC23_Sessao::test_timeout_de_inatividade PASSED [ 9
 tests/test_controles.py::TestSC23_Sessao::test_expiracao_absoluta PASSED [ 97%]
 tests/test_controles.py::TestSC23_Sessao::test_logout_invalida_sessao PASSED [100%]
 
-============================= 48 passed in 3.71s ==============================
+============================== 49 passed in 4.32s ==============================

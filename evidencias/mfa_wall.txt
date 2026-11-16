@@ -1,6 +1,16 @@
-PS C:\Users\oandr\Documentos computador\t_final_segurança> docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5001 --usuario alvo --wordlist senha_correta.txt   # senha correta -> para no MFA
+$ docker exec -w /proj app_segura python ataque/brute_force.py --url http://host.docker.internal:5001 --usuario alvo --wordlist ataque/senha_correta.txt
+# executado: 2026-11-16T11:04:19-03:00 | origem: docker (container app_segura) | Python 3.12.16 (linux)
 
-=== Demonstracao da parede de MFA (senha CORRETA, sem 2o fator) ===
-Verificacao em duas etapas
-Digite o codigo
-(Senha correta NAO leva ao painel: para na verificacao em duas etapas = IA-2(1)/(2))
+================================================================
+ATAQUE DE FORCA BRUTA
+Alvo        : http://host.docker.internal:5001/login
+Usuario     : alvo
+Senhas testar: 1
+Inicio      : 2026-11-16 14:04:19
+================================================================
+[01] senha='correta cavalo bateria grampo 91' -> MFA_REQUERIDO (HTTP 200)
+================================================================
+RESULTADO   : Senha 'correta cavalo bateria grampo 91' estava correta, mas o MFA impediu o acesso (IA-2(1)/(2)).
+Tentativas  : 1
+Duracao     : 0.10s
+================================================================

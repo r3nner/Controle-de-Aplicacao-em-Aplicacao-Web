@@ -1,0 +1,24 @@
+$ docker exec -w /proj app_segura python ataque/benchmark_hash.py --repeticoes 7
+# executado: 2026-11-16T11:04:21-03:00 | origem: docker (container app_segura) | Python 3.12.16 (linux)
+
+================================================================
+BENCHMARK DE HASH — MD5 (sem salt) vs Argon2id (RFC 9106 low mem)
+================================================================
+Maquina/Python : linux, Python 3.12.16
+Argon2id params: m=65536 KiB (64 MiB), t=3, p=4
+Repeticoes     : 7 (reporta a mediana)
+Lista alvo     : 10.000 senhas
+----------------------------------------------------------------
+MD5 sem salt   : 2.894.799 hashes/s
+Argon2id       : 23.92 hashes/s (41.8 ms por hash)
+----------------------------------------------------------------
+Razao MD5/Argon2id : 121.015x  (~5.1 ordens de grandeza)
+----------------------------------------------------------------
+Tempo p/ testar 10.000 senhas (offline, 1 nucleo):
+  MD5 sem salt : 3.5 ms
+  Argon2id     : 7.0 min
+================================================================
+Leitura: cada login custa 1 hash, mas o ATAQUE OFFLINE (T3) precisa
+recomputar o hash por tentativa; o Argon2id multiplica esse custo em
+~5.1 ordens de grandeza, inviabilizando listas grandes.
+================================================================
