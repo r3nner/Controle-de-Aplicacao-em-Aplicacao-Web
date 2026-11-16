@@ -18,6 +18,9 @@ DB_PATH = os.environ.get("DB_PATH", "/data/segura.db")
 INATIVIDADE_SEG = int(os.environ.get("TIMEOUT_INATIVIDADE", "900"))     # 15 min
 ABSOLUTA_SEG = int(os.environ.get("TIMEOUT_ABSOLUTO", "28800"))         # 8 h
 PRE_AUTH_SEG = int(os.environ.get("PRE_AUTH_SEG", "300"))               # 5 min
+# AU-3/R2: so confie em X-Forwarded-For atras de um proxy reverso confiavel.
+# Padrao false -> usa o IP real da conexao (nao falsificavel pelo cliente).
+TRUST_PROXY = os.environ.get("TRUST_PROXY", "false").lower() == "true"
 
 
 # ---------------------------------------------------------------------------
@@ -65,7 +68,17 @@ def init_db(db_path: str):
 
 
 def _ip() -> str:
-    return request.headers.get("X-Forwarded-For", request.remote_addr or "-")
+    """
+    IP de origem para o log (AU-3). X-Forwarded-For e definido pelo CLIENTE e
+    so e confiavel se um proxy reverso confiavel o reescreve; sem isso, um
+    atacante forja o IP registrado e engana a regra R2 de detecacao.
+    """
+    conexao = request.remote_addr or "-"
+    if not TRUST_PROXY:
+        return conexao
+    encaminhado = request.headers.get("X-Forwarded-For", "")
+    cliente = encaminhado.split(",")[0].strip()
+    return cliente or conexao
 
 
 def _ua() -> str:

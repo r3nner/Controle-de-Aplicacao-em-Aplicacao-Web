@@ -275,6 +275,17 @@ class TestAU_Logging:
         conteudo = open(log_tmp, encoding="utf-8").read()
         assert "SENHAULTRASECRETA42" not in conteudo
 
+    def test_xff_forjado_nao_aparece_no_log_por_padrao(self, client, log_tmp, db_path):
+        # AU-3/R2: sem TRUST_PROXY (padrao), um X-Forwarded-For forjado pelo
+        # cliente e IGNORADO; o log guarda o IP real da conexao (remote_addr).
+        criar_usuario(db_path, "spoof", "SenhaForteSpoof#1")
+        client.post("/login", data={"usuario": "spoof", "senha": "errada"},
+                    headers={"X-Forwarded-For": "203.0.113.7"})
+        evs = C.revisar_eventos(log_tmp, tipo="LOGIN_FALHA", usuario="spoof")
+        assert evs, "o evento LOGIN_FALHA deveria ter sido registrado"
+        assert all(e["ip"] != "203.0.113.7" for e in evs)   # IP forjado barrado
+        assert all(e["ip"] == "127.0.0.1" for e in evs)      # usa remote_addr
+
     def test_revisao_filtra_por_tipo(self, log_tmp):
         C.registrar_evento("LOGIN_SUCESSO", "u1")
         C.registrar_evento("LOGIN_FALHA", "u2")
