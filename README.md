@@ -14,9 +14,10 @@ aplicação web. Referência principal: **NIST SP 800-53**; complementar:
 |-------|----------|
 | `app_vulneravel/` | App Flask insegura (MD5, sem MFA, sem lockout, sessão fraca) — a linha de base "antes". |
 | `app_segura/` | A mesma app com os 6 controles (`controles.py`, `app.py`), lista de bloqueio (`dados/senhas_bloqueadas.txt`), revisão de log (`revisao.py`) e reset de laboratório (`reset_lab.py`). |
-| `tests/` | Suíte pytest que comprova cada controle (48 testes, inclui os requisitos do Apêndice A). |
-| `ataque/` | Scripts de força bruta e credential stuffing + comandos (inclui Hydra). |
-| `evidencias/` | Saídas reais: pytest, ataques, log do servidor e revisão (R1/R2). |
+| `tests/` | Suíte pytest que comprova cada controle (49 testes, inclui os requisitos do Apêndice A e o teste anti-spoofing de `X-Forwarded-For`). |
+| `ataque/` | Scripts de força bruta, credential stuffing e `benchmark_hash.py` (MD5 × Argon2id). |
+| `evidencias/` | Saídas reais coletadas por `scripts/coletar_evidencias.py`: pytest, ataques, log do servidor, revisão (R2) e benchmark. |
+| `scripts/` | `coletar_evidencias.py` — coletor honesto de evidências (`.txt` com cabeçalho do comando exato + `.png`). |
 | `relatorio/` | **Relatório técnico-científico v2** (`Relatorio_G11_Autenticacao_v2.docx`, canônico) + gerador auxiliar `.docx`/prints. |
 | `slides/` | Roteiro da apresentação. |
 
@@ -55,36 +56,37 @@ python app_segura/run_local.py        # porta 5001
 - Vulnerável: http://localhost:5000  (usuário `alvo` / `senha123`)
 - Segura: http://localhost:5001
 
-> **Nota de ambiente:** a evidência do ataque neste trabalho foi coletada pela
-> Opção B. A `app_segura/run_local.py` desabilita o cookie `Secure` para o
-> laboratório em HTTP; em produção o SC-23 exige HTTPS + `Secure=true`.
+> **Nota de ambiente:** as evidências do relatório foram coletadas pela
+> **Opção A (Docker)** — `scripts/coletar_evidencias.py --modo docker` (saída
+> `platform linux`, alvos `host.docker.internal`). O laboratório roda em HTTP com
+> o cookie `Secure` desabilitado; em produção o SC-23 exige HTTPS + `Secure=true`.
 
 ### 2. Instalar dependências de teste/ataque (host)
 ```bash
 pip install -r requirements-dev.txt
 ```
 
-### 3. Rodar os testes (verificação dos controles)
+### 3. Coletar todas as evidências (um comando)
 ```bash
-python -m pytest -v tests/ | tee evidencias/pytest_saida.txt
+python scripts/coletar_evidencias.py --modo docker
+```
+Executa, na ordem: `reset_lab` → pytest → força bruta (vulnerável e segura) →
+espera o bloqueio expirar → `reset_lab` → credential stuffing → parede de MFA →
+log do servidor → revisão (R2) → benchmark. Grava cada `.txt` com cabeçalho do
+**comando exato** executado (origem docker/linux) e renderiza
+`evidencias/capturaN_*.png`. Use `--modo local` para rodar no host (`localhost`).
+Passo a passo detalhado: `instructions.md`.
+
+Para rodar só os testes:
+```bash
+docker exec -w /proj app_segura python -m pytest -v tests/   # 49 passed, platform linux
+python -m pytest -v tests/                                    # no host (platform win32)
 ```
 
-### 4. Rodar o ataque antes/depois
-Siga `ataque/README.md`. Em resumo:
-```bash
-cd ataque
-python brute_force.py --url http://localhost:5000 --usuario alvo --wordlist wordlist.txt --saida ../evidencias/ataque_vuln_bruteforce.txt
-python brute_force.py --url http://localhost:5001 --usuario alvo --wordlist wordlist.txt --saida ../evidencias/ataque_segura_bruteforce.txt
-python credential_stuffing.py --url http://localhost:5001 --creds creds_vazadas.txt --saida ../evidencias/ataque_segura_stuffing.txt
-docker exec app_segura cat /app/seguranca.log > ../evidencias/log_servidor.txt
-```
-
-### 5. Gerar o relatório
-```bash
-python relatorio/gerar_relatorio.py
-```
-Gera `relatorio/Relatorio_G11_Autenticacao.docx` com as evidências embutidas e
-marcadores de onde inserir as capturas de tela.
+### 4. Texto corrigido do relatório
+Os blocos prontos para colar no Google Doc (tabelas de números antigo→novo,
+hipóteses H1–H6, controles, Tabela 5, legendas e parágrafos reescritos) estão em
+`relatorio/CORRECOES_RELATORIO.md`.
 
 ## Encerrar
 ```bash
